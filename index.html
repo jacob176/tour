@@ -8,6 +8,9 @@
     <script src="https://unpkg.com/aframe-look-at-component@0.5.1/dist/aframe-look-at-component.min.js"></script>
     <script src="https://rawgit.com/mayognaise/aframe-mouse-cursor-component/master/dist/aframe-mouse-cursor-component.min.js"></script>
     <script>
+      <?php
+        echo 'ciao';
+      ?>
       function clickHotspotImage(event) {
         var xCoordinate = event.offsetX;
         var yCoordinate = event.offsetY;
@@ -91,7 +94,7 @@
     </script>
   </head>
   <body>
-  <!--<body onload ="caricaFrecce()">-->
+    <!--<body onload ="caricaFrecce()">-->
     <div id="elements" style="width: 600px; height: 300px; ">
       <a-scene id="scena" embedded>
         <a-assets>
@@ -103,8 +106,10 @@
             id="point2"
             src="https://gnerigh.000webhostapp.com/img/primo-banco.jpeg"
           />
-          <img id="freccia" src="https://gnerigh.000webhostapp.com/img/freccia.png" />
-
+          <img
+            id="freccia"
+            src="https://gnerigh.000webhostapp.com/img/freccia.png"
+          />
         </a-assets>
         <a-entity id="clickPosition" position="0 0 -100"></a-entity>
         <a-sky id="skybox" src="#point1"> </a-sky>
@@ -128,11 +133,7 @@
         </a-entity>
 
         <a-entity id="spots" hotspots>
-          <a-entity
-            rotation="0 0 0"
-            position="0 0 0"
-            id="group-point1"
-          >
+          <a-entity rotation="0 0 0" position="0 0 0" id="group-point1">
             <a-image
               onclick="clickHotspotImage(event)"
               spot="linkto:#point2;spotgroup:group-point2"
