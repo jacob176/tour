@@ -24,10 +24,10 @@
             yCoordinate)
         );
       }
-      /*function caricaFrecce()
+      function caricaFrecce()
       {
-        document.getElementById("spots").innerHTML += '<a-entity rotation="0 0 0" position="' +posX +" " +posY +" " +posZ +'" id="group-point3"><a-image onclick="clickHotspotImage(event)" spot="linkto:#point2;spotgroup:group-point2" src="#arrow"></a-image></a-entity>';
-      }*/
+        document.getElementById("spots").innerHTML += '<a-entity rotation="0 0 0" position="' +posX +" " +posY +" " +posZ +'" id="group-point3"><a-image onclick="clickHotspotImage(event)" spot="linkto:#point2;spotgroup:group-point2" src="https://gnerigh.000webhostapp.com/img/freccia.png"></a-image></a-entity>';
+      }
       function pos() {
         var cameraEl = document.querySelector("#cam");
         var WorldPosition = cameraEl.object3D.getWorldPosition();
@@ -137,7 +137,6 @@
             <a-image
               onclick="clickHotspotImage(event)"
               spot="linkto:#point2;spotgroup:group-point2"
-              src="https://gnerigh.000webhostapp.com/img/freccia.png"
             ></a-image>
           </a-entity>
           <a-entity id="group-point2" scale="0 0 0">
