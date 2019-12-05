@@ -1,0 +1,155 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <title>Hello, WebVR! • A-Frame</title>
+    <meta name="description" content="Hello, WebVR! • A-Frame" />
+    <script src="https://aframe.io/releases/0.9.2/aframe.min.js"></script>
+    <script src="https://unpkg.com/aframe-look-at-component@0.5.1/dist/aframe-look-at-component.min.js"></script>
+    <script src="https://rawgit.com/mayognaise/aframe-mouse-cursor-component/master/dist/aframe-mouse-cursor-component.min.js"></script>
+    <script>
+      function clickHotspotImage(event) {
+        var xCoordinate = event.offsetX;
+        var yCoordinate = event.offsetY;
+        var hotspotlist = document.getElementById("hotspot_list").value;
+        alert(
+          (document.getElementById("hotspot_list").value =
+            document.getElementById("hotspot_list").value +
+            "\n" +
+            xCoordinate +
+            "," +
+            yCoordinate)
+        );
+      }
+      function caricaFrecce()
+      {
+        document.getElementById("spots").innerHTML += '<a-entity rotation="0 0 0" position="' +posX +" " +posY +" " +posZ +'" id="group-point3"><a-image onclick="clickHotspotImage(event)" spot="linkto:#point2;spotgroup:group-point2" src="#arrow"></a-image></a-entity>';
+      }
+      function pos() {
+        var cameraEl = document.querySelector("#cam");
+        var WorldPosition = cameraEl.object3D.getWorldPosition();
+        var pos = cameraEl.getAttribute("position");
+        var rot = cameraEl.getAttribute("rotation");
+        var posX = -(Math.sin(THREE.Math.degToRad(rot.y)) * 10);
+        var posY = Math.sin(THREE.Math.degToRad(rot.x)) * 10;
+        var posZ = -(Math.cos(THREE.Math.degToRad(rot.y)) * 10);
+        //alert("RotX:" + rot.x);
+        //alert("RotX:" + rot.y);
+        //alert("RotX:" + THREE.Math.degToRad(rot.x));
+        //alert("RotY:" + THREE.Math.degToRad(rot.y));
+        document.getElementById("spots").innerHTML +=
+          '<a-entity rotation="0 0 0" position="' +
+          posX +
+          " " +
+          posY +
+          " " +
+          posZ +
+          '" id="group-point3"><a-image onclick="clickHotspotImage(event)" spot="linkto:#point2;spotgroup:group-point2" src="#arrow"></a-image></a-entity>';
+      }
+      AFRAME.registerComponent("hotspots", {
+        init: function() {
+          this.el.addEventListener("reloadspots", function(evt) {
+            //get the entire current spot group and scale it to 0
+            var currspotgroup = document.getElementById(evt.detail.currspots);
+            currspotgroup.setAttribute("scale", "0 0 0");
+
+            //get the entire new spot group and scale it to 1
+            var newspotgroup = document.getElementById(evt.detail.newspots);
+            newspotgroup.setAttribute("scale", "1 1 1");
+          });
+        }
+      });
+      AFRAME.registerComponent("spot", {
+        schema: {
+          linkto: { type: "string", default: "" },
+          spotgroup: { type: "string", default: "" }
+        },
+        init: function() {
+          //add image source of hotspot icon
+          this.el.setAttribute("src", "#hotspot");
+          //make the icon look at the camera all the time
+          this.el.setAttribute("look-at", "#cam");
+
+          var data = this.data;
+          this.el.addEventListener("click", function() {
+            //set the skybox source to the new image as per the spot
+            var sky = document.getElementById("skybox");
+            sky.setAttribute("src", data.linkto);
+
+            var spotcomp = document.getElementById("spots");
+            var currspots = this.parentElement.getAttribute("id");
+            //create event for spots component to change the spots data
+            spotcomp.emit("reloadspots", {
+              newspots: data.spotgroup,
+              currspots: currspots
+            });
+            var e = this.el.getAttribute("position");
+            alert(e);
+          });
+        }
+      });
+    </script>
+  </head>
+  <body>
+  <!--<body onload ="caricaFrecce()">-->
+    <div id="elements" style="width: 600px; height: 300px; ">
+      <a-scene id="scena" embedded>
+        <a-assets>
+          <img
+            id="point1"
+            src="https://gnerigh.000webhostapp.com/img/ultimo-banco.jpg"
+          />
+          <img
+            id="point2"
+            src="https://gnerigh.000webhostapp.com/img/primo-banco.jpeg"
+          />
+          <img id="hotspot_avanti" src="#" />
+          <img id="hotspot_dietro" src="#" />
+          <img id="hotspot_destra" src="#" />
+          <img id="hotspot_sinistra" src="#" />
+        </a-assets>
+        <a-entity id="clickPosition" position="0 0 -100"></a-entity>
+        <a-sky id="skybox" src="#point1"> </a-sky>
+        <a-entity
+          id="cam"
+          mouse-cursor
+          camera
+          rotation="0 0 0"
+          position="0 0 0"
+          look-controls
+        >
+          <a-entity
+            cursor="fuse:true;fuseTimeout:2000"
+            geometry="primitive:ring;radiusInner:0.01;radiusOuter:0.02"
+            position="0 0 -1"
+            material="shader:flat;color:#ff0000"
+            animation__mouseenter="property:scale;to:3 3
+            3;startEvents:mouseenter;endEvents:mouseleave;dir:reverse;dur:2000;loop:1"
+          >
+          </a-entity>
+        </a-entity>
+
+        <a-entity id="spots" hotspots>
+          <a-entity
+            rotation="0 0 0"
+            position="-3.631 5.158504 9.317502"
+            id="group-point1"
+          >
+            <a-image
+              onclick="clickHotspotImage(event)"
+              spot="linkto:#point2;spotgroup:group-point2"
+              src="#arrow"
+            ></a-image>
+          </a-entity>
+          <a-entity id="group-point2" scale="0 0 0">
+            <a-image
+              spot="linkto:#point1;spotgroup:group-point1"
+              position="10 0 -8"
+            ></a-image>
+          </a-entity><!--ciao a TUTTI buon lavoro cari figlioli-->
+        </a-entity>
+      </a-scene>
+    </div>
+    <button id="bottone" onclick="pos()" type="button">add arrow</button>
+  </body>
+</html>
