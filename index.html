@@ -103,10 +103,8 @@
             id="point2"
             src="https://gnerigh.000webhostapp.com/img/primo-banco.jpeg"
           />
-          <img id="hotspot_avanti" src="#" />
-          <img id="hotspot_dietro" src="#" />
-          <img id="hotspot_destra" src="#" />
-          <img id="hotspot_sinistra" src="#" />
+          <img id="freccia" src="https://gnerigh.000webhostapp.com/img/freccia.png" />
+
         </a-assets>
         <a-entity id="clickPosition" position="0 0 -100"></a-entity>
         <a-sky id="skybox" src="#point1"> </a-sky>
@@ -132,13 +130,13 @@
         <a-entity id="spots" hotspots>
           <a-entity
             rotation="0 0 0"
-            position="-3.631 5.158504 9.317502"
+            position="0 0 0"
             id="group-point1"
           >
             <a-image
               onclick="clickHotspotImage(event)"
               spot="linkto:#point2;spotgroup:group-point2"
-              src="#arrow"
+              src="https://gnerigh.000webhostapp.com/img/freccia.png"
             ></a-image>
           </a-entity>
           <a-entity id="group-point2" scale="0 0 0">
