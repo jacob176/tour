@@ -11,7 +11,7 @@
       <?php
         echo 'ciao';
       ?>
-      function clickHotspotImage(event) {
+      /*function clickHotspotImage(event) {
         var xCoordinate = event.offsetX;
         var yCoordinate = event.offsetY;
         var hotspotlist = document.getElementById("hotspot_list").value;
@@ -23,9 +23,13 @@
             "," +
             yCoordinate)
         );
-      }
+      }*/
       function caricaFrecce()
       {
+        <?php
+          
+          ?>
+        
         document.getElementById("spots").innerHTML += '<a-entity rotation="0 0 0" position="' +posX +" " +posY +" " +posZ +'" id="group-point3"><a-image onclick="clickHotspotImage(event)" spot="linkto:#point2;spotgroup:group-point2" src="https://gnerigh.000webhostapp.com/img/freccia.png"></a-image></a-entity>';
       }
       function pos() {
@@ -133,16 +137,14 @@
         </a-entity>
 
         <a-entity id="spots" hotspots>
-          <a-entity rotation="0 0 0" position="0 0 0" id="group-point1">
+          <a-entity id="group-point1" rotation="0 0 0" position="0 0 0">
             <a-image
-              onclick="clickHotspotImage(event)"
               spot="linkto:#point2;spotgroup:group-point2"
             ></a-image>
           </a-entity>
-          <a-entity id="group-point2" scale="0 0 0">
+          <a-entity id="group-point2" position="10 0 -8" rotation="0 0 0">
             <a-image
               spot="linkto:#point1;spotgroup:group-point1"
-              position="10 0 -8"
             ></a-image>
           </a-entity>
         </a-entity>
